@@ -43,7 +43,19 @@ define Package/$(PKG_NAME)/conffiles
 /etc/config/aliyundrive-webdav
 endef
 
+define Download/sha256sum
+	FILE:=$(PKG_SOURCE).sha256
+	URL_FILE:=$(FILE)
+	URL:=$(PKG_SOURCE_URL)
+	HASH:=skip
+endef
+$(eval $(call Download,sha256sum))
+
 define Build/Prepare
+	$(Build/Prepare/Default)
+	pushd $(DL_DIR)
+	shasum -a 256 -c $(DL_DIR)/$(PKG_SOURCE).sha256
+	popd
 	tar -C $(PKG_BUILD_DIR)/ -zxf $(DL_DIR)/$(PKG_SOURCE)
 endef
 

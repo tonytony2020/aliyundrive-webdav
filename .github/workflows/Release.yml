@@ -2,7 +2,7 @@ name: Release
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, pkg-hash ]
     tags: [ 'v*' ]
   pull_request:
 
